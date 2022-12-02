@@ -3,7 +3,7 @@ import { Container, List, Paper } from '@mui/material';
 import React, { useState } from "react";
 import './App.css';
 import Todo from "./components/Todo";
-import AddTodonp from "./components/AddTodo";
+import AddTodo from "./components/AddTodo";
 
 function App() {
 
