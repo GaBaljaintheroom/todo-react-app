@@ -9,6 +9,21 @@ function App() {
 
   const [items, setItems] = useState([]);
 
+  const requestOptions = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  };
+
+  fetch("http://localhost:8080/todo", requestOptions)
+    .then((response) => response.json())
+    .then(
+      (response) => {
+        setItems(response.data);
+      },
+      (error) => {
+
+      }
+    );
 
 
     const addItem = (item) => {
