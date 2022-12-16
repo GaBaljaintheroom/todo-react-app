@@ -1,6 +1,6 @@
 
 import { Container, List, Paper } from '@mui/material';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 import Todo from "./components/Todo";
 import AddTodo from "./components/AddTodo";
@@ -9,10 +9,13 @@ function App() {
 
   const [items, setItems] = useState([]);
 
-  const requestOptions = {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  };
+  // 배열 내의 값이 변하면 실행
+  useEffect(() => {   
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+
 
   fetch("http://localhost:8080/todo", requestOptions)
     .then((response) => response.json())
@@ -20,10 +23,9 @@ function App() {
       (response) => {
         setItems(response.data);
       },
-      (error) => {
-
-      }
+      (error) => {}
     );
+  }, []);
 
 
     const addItem = (item) => {
@@ -45,16 +47,20 @@ function App() {
     setItems([...items]);
   }
 
-      let todoItems = 
-      items.length > 0 && (
-        <Paper style={{margin:16}}>
-          <List>
-            {items.map((item) => (
-              <Todo item={item} key={item.id} editItem={editItem} deleteItem={deleteItem} />
-            ))}
-          </List>
-        </Paper>
-      );
+    let todoItems = items.length > 0 && (
+    <Paper sytle={{ margin: 16 }}>
+      <List>
+        {items.map((item) => (
+          <Todo
+            item={item}
+            key={item.id}
+            editItem={editItem}
+            deleteItem={deleteItem}
+          />
+        ))}
+      </List>
+    </Paper>
+  )
 
   return (
     <div className="App">
@@ -64,6 +70,7 @@ function App() {
       </Container>
     </div>
   );
+
 }
 
 export default App;
